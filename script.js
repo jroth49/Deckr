@@ -1,30 +1,30 @@
 const cardData = [
     {
-      img: 'https://via.placeholder.com/300x240?text=1',
+      img: 'https://cdn11.bigcommerce.com/s-3b5vpig99v/images/stencil/1280x1280/products/630432/1375769/Barrowgoyf050__62299.1717783311.jpg?c=2',
       name: 'Alex',
       age: 25,
       bio: 'Enjoys long walks and coding on weekends.'
     },
     {
-      img: 'https://via.placeholder.com/300x240?text=2',
+      img: 'https://i.ebayimg.com/images/g/cF8AAOSwQ9BgR29Y/s-l500.jpg',
       name: 'Taylor',
       age: 28,
       bio: 'Loves photography and exploring nature.'
     },
     {
-      img: 'https://via.placeholder.com/300x240?text=3',
+      img: 'https://m.media-amazon.com/images/I/417AEkVdrGS.jpg',
       name: 'Jordan',
       age: 30,
       bio: 'Coffee addict and bookworm.'
     },
     {
-      img: 'https://via.placeholder.com/300x240?text=4',
+      img: 'https://cards.scryfall.io/normal/front/f/8/f86f7d03-ce71-498d-9dc5-2bd853ac0eae.jpg?1682202814',
       name: 'Sam',
       age: 26,
       bio: 'Passionate about music and travel.'
     },
     {
-      img: 'https://via.placeholder.com/300x240?text=5',
+      img: 'https://images.squarespace-cdn.com/content/v1/55ef5707e4b00992366cdd80/1547745621923-TMI6D0U0OGEOQICTXRMG/Wilderness+Reclamation+Card.jpg?format=300w',
       name: 'Casey',
       age: 29,
       bio: 'Designer by day, gamer by night.'
@@ -39,7 +39,7 @@ const cardData = [
     card.className = 'card';
   
     card.innerHTML = `
-      <img src="${profile.img}" alt="${profile.name}">
+      <img src="${profile.img}" alt="${profile.name}" style="width:100%; height:100%; pointer-events:none;">
       <div class="info">
         <p><strong>Name:</strong> ${profile.name}</p>
         <p><strong>Age:</strong> ${profile.age}</p>

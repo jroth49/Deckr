@@ -1,35 +1,23 @@
-const cardData = [
-  {
-      img: 'https://cdn11.bigcommerce.com/s-3b5vpig99v/images/stencil/1280x1280/products/630432/1375769/Barrowgoyf050__62299.1717783311.jpg?c=2',
-      name: 'Alex',
-      age: 25,
-      bio: 'Enjoys long walks and coding on weekends.'
-  },
-  {
-      img: 'https://i.ebayimg.com/images/g/cF8AAOSwQ9BgR29Y/s-l500.jpg',
-      name: 'Taylor',
-      age: 28,
-      bio: 'Loves photography and exploring nature.'
-  },
-  {
-      img: 'https://m.media-amazon.com/images/I/417AEkVdrGS.jpg',
-      name: 'Jordan',
-      age: 30,
-      bio: 'Coffee addict and bookworm.'
-  },
-  {
-      img: 'https://cards.scryfall.io/normal/front/f/8/f86f7d03-ce71-498d-9dc5-2bd853ac0eae.jpg?1682202814',
-      name: 'Sam',
-      age: 26,
-      bio: 'Passionate about music and travel.'
-  },
-  {
-      img: 'https://images.squarespace-cdn.com/content/v1/55ef5707e4b00992366cdd80/1547745621923-TMI6D0U0OGEOQICTXRMG/Wilderness+Reclamation+Card.jpg?format=300w',
-      name: 'Casey',
-      age: 29,
-      bio: 'Designer by day, gamer by night.'
-  }
-];
+let cardData = [];
+
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('/random_cards')
+    .then(response => response.json())
+    .then(cards => {
+      // Clear the card container before adding new cards
+      const cardContainer = document.getElementById('card-container');
+      cardContainer.innerHTML = '';  // Clear previous cards
+
+      // Loop over the fetched cards and create new card elements
+      cards.forEach(profile => {
+        console.log(profile);
+        cardData.push(profile);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching random cards:', error);
+    });
+});
 
 const container = document.getElementById('card-container');
 let cardIndex = 0;
@@ -51,21 +39,6 @@ function createCard(profile) {
 
   addDragBehavior(card);
   return card;
-}
-
-function toggleCardExpansion(card) {
-  // Toggle the expanded class with animation
-  if (!card.classList.contains('expanded')) {
-      card.classList.add('expanded');
-      // Center the card when expanding
-      container.style.justifyContent = 'center';
-      container.style.alignItems = 'center';
-  } else {
-      card.classList.remove('expanded');
-      // Reset container alignment after closing
-      container.style.justifyContent = 'center';
-      container.style.alignItems = 'center';
-  }
 }
 
 function addDragBehavior(card) {
@@ -105,6 +78,26 @@ function addDragBehavior(card) {
   card.addEventListener('mousedown', onMouseDown);
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
+}
+
+function showModal(profile) {
+  const modal = document.getElementById('modal');
+  
+  // Show the modal
+  modal.style.display = 'block';
+
+  const current_card = cardData[0];
+  console.log(current_card);
+  // Update the modal content dynamically
+  document.getElementById('modal-img').src = current_card['img'];
+  document.getElementById('modal-name').textContent = current_card['name'];
+  document.getElementById('modal-age').textContent = current_card['age'];
+  document.getElementById('modal-bio').textContent = current_card['bio'];
+}
+
+function closeModal() {
+  const modal = document.getElementById('modal')
+  modal.style.display = 'none';
 }
 
 function swipeCard(direction) {

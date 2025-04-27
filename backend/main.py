@@ -16,6 +16,10 @@ def main():
     print('Total Cards: ', results['total_cards'])
     print(results.keys())
 
+    random_card = scry.get_random_card()
+
+    print(random_card)
+
     return 0
 
 

@@ -17,13 +17,33 @@
     </div>
   </header>
 
+  <!-- Modal Structure -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close-btn" class="close-btn" onclick="closeModal()">&times;</span>
+      
+      <!-- Left side: Image -->
+      <div id="modal-img-container" class="modal-img-container">
+        <img id="modal-img" src="" alt="" style="pointer-events:none;">
+      </div>
+      
+      <!-- Right side: Information -->
+      <div id="modal-info-container" class="modal-info-container">
+        <div class="info">
+          <p><strong>Name:</strong> <span id="modal-name"></span></p>
+          <p><strong>Age:</strong> <span id="modal-age"></span></p>
+          <p><strong>Bio:</strong> <span id="modal-bio"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="content-container">
       <div id="card-container"></div>
   
-      <!-- New section with 3 buttons -->
       <div class="button-section">
         <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
-        <button class="action-btn">🔍</button>
+        <button class="action-btn" onclick="showModal()">🔍</button>
         <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
       </div>
     </div>

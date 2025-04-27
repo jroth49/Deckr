@@ -147,3 +147,81 @@ button {
   font-size: 0.9rem;
   cursor: pointer;
 }
+
+
+/* Modal background (covers the entire screen) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  z-index: 1000; /* Ensure the modal is above other content */
+  overflow: hidden;
+}
+
+/* Modal content box */
+.modal-content {
+  display: flex; /* Side-by-side layout */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the modal */
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%; /* Adjust width as needed */
+  max-width: 900px; /* Adjust max width */
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden; /* Prevent overflow of the content */
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Left side: Image container */
+.modal-img-container {
+  flex: 1; /* Take up 50% of the space */
+  padding-right: 20px; /* Space between the image and info */
+}
+
+.modal-img-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Optional: rounded corners */
+}
+
+/* Right side: Information container */
+.modal-info-container {
+  flex: 1; /* Take up 50% of the space */
+  overflow-y: auto; /* Scrollable if the content is too long */
+  max-height: 80vh; /* Limit height to prevent overflow */
+  padding-left: 20px;
+}
+
+.modal-info-container .info p {
+  margin: 10px 0;
+}
+
+/* Scroll styling (optional) */
+.modal-info-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-info-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.modal-info-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

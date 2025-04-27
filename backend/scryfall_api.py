@@ -36,7 +36,7 @@ class ScryfallAPI:
         try:
             response = self.session.get(url, params=params)
             response.raise_for_status()
-            return response
+            return response.json()
         except requests.RequestException as e:
             print(f"Error during API call: {e}")
             return None

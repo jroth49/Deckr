@@ -1,0 +1,149 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#card-container {
+  position: relative;
+  width: 400px; /* Same as card container */
+  height: 500px;
+  transition: all 0.3s ease;
+  margin: 0 auto; /* Center the card container */
+}
+
+/* Wrapper container for both cards and buttons */
+.content-container {
+  width: 400px; /* Same width for both card container and buttons */
+  display: flex;
+  flex-direction: column; /* Stack cards and buttons vertically */
+  align-items: center; /* Align both vertically stacked content */
+}
+
+.button-section {
+  width: 400px; /* Match the card container width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Style for action buttons */
+.action-btn {
+  width: 60px; /* Button width */
+  height: 60px; /* Button height */
+  border: 1px solid lightgrey; /* Border with color */
+  background-color: transparent; /* No background */
+  color: #3498db; /* Border and text color */
+  border-radius: 50%; /* Makes the button circular */
+  display: flex; /* Aligns the icon inside the button */
+  justify-content: center; /* Centers the icon horizontally */
+  align-items: center; /* Centers the icon vertically */
+  font-size: 30px; /* Icon size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect: box-shadow for raise, inset transform for indentation */
+.action-btn:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Raised effect */
+  transform: translateY(-5px); /* Raise the button */
+}
+
+/* Active effect: inset for depression */
+.action-btn:active {
+  transform: translateY(2px); /* Button moves down slightly for depression */
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2); /* Inset shadow effect */
+}
+
+.card {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+  cursor: grab;
+  transform-origin: center center;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+/* Stack styling */
+.card:nth-child(1) {
+  z-index: 3;
+}
+
+.card:nth-child(2) {
+  transform: scale(0.95) translateY((10px));
+  z-index: 2;
+}
+
+.card:nth-child(3) {
+  transform: scale(0.9) translateY((20px));
+  z-index: 1;
+}
+
+.header {
+  position: fixed;         /* <-- Keeps it locked to the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;            /* <-- Keeps it above other elements */
+}
+
+.site-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Algerian", fantasy;
+}
+
+.header-buttons {
+  position: absolute;
+  right: 20px;
+}
+
+.header-buttons button {
+  margin-left: 10px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}

@@ -10,6 +10,13 @@ def main():
     q = 'c:rg t:legend'
 
     results = scry.search_cards(query=q, page=1)
-    print(results)
+    cards = results['data']
+    print(type(results))
+    print(cards[0])
+    print('Total Cards: ', results['total_cards'])
+    print(results.keys())
 
     return 0
+
+
+main()

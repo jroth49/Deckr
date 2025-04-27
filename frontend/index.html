@@ -4,12 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Card Stack Tinder Clone</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
 <body>
 
-  <div id="card-container"></div>
+  <header class="header">
+    <div class="site-name">Deckr</div>
+    <div class="header-buttons">
+      <button>🛒 <span id="like-count" class="badge">0</span></button>
+      <button>⚙️</button>
+    </div>
+  </header>
 
-  <script src="script.js"></script>
+    <div class="content-container">
+      <div id="card-container"></div>
+  
+      <!-- New section with 3 buttons -->
+      <div class="button-section">
+        <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
+        <button class="action-btn">🔍</button>
+        <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
+      </div>
+    </div>
+
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

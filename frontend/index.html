@@ -13,30 +13,88 @@
     <div class="site-name">Deckr</div>
     <div class="header-buttons">
       <button>🛒 <span id="like-count" class="badge">0</span></button>
-      <button>⚙️</button>
+      <button onclick="console.log(likedCards);">⚙️</button>
     </div>
   </header>
 
-  <!-- Modal Structure -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="close-btn" class="close-btn" onclick="closeModal()">&times;</span>
-      
+  <!-- Loading spinner -->
+  <div id="loading-spinner" class="loading-spinner">
+    <!-- You can use a simple CSS spinner or an image spinner here -->
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span id="close-btn" class="close-btn" onclick="closeModal()">&times;</span>
+    
+    <!-- Modal container for content: Image on the left, info on the right -->
+    <div class="modal-card-content">
       <!-- Left side: Image -->
-      <div id="modal-img-container" class="modal-img-container">
-        <img id="modal-img" src="" alt="" style="pointer-events:none;">
+      <div class="modal-img-container">
+        <img src="" id="modal-image" alt="Card Image" />
       </div>
       
-      <!-- Right side: Information -->
-      <div id="modal-info-container" class="modal-info-container">
-        <div class="info">
-          <p><strong>Name:</strong> <span id="modal-name"></span></p>
-          <p><strong>Age:</strong> <span id="modal-age"></span></p>
-          <p><strong>Bio:</strong> <span id="modal-bio"></span></p>
-        </div>
+      <!-- Right side: Information in a scrollable container -->
+      <div class="modal-info-container">
+        <table>
+          <tr>
+            <th>Name</th>
+            <td id="modal-name"></td>
+          </tr>
+          <tr>
+            <th>Text</th>
+            <td id="modal-card-text"></td>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <td id="modal-card-type"></td>
+          </tr>
+          <tr>
+            <th>Rarity</th>
+            <td id="modal-card-rarity"></td>
+          </tr>
+          <tr>
+            <th>Mana Cost</th>
+            <td id="modal-card-mana-cost"></td>
+          </tr>
+          <tr>
+            <th>Set</th>
+            <td id="modal-card-set"></td>
+          </tr>
+          <tr>
+            <th>Legalities</th>
+            <td id="modal-legalities"></td>
+          </tr>
+          <tr>
+            <th>Pricing</th>
+            <td id="modal-prices"></td>
+          </tr>
+          <tr>
+            <th>Purchase</th>
+            <td id="modal-purchases"></td>
+          </tr>
+          <tr>
+            <th>Finishes</th>
+            <td id="modal-finishes"></td>
+          </tr>
+          <tr>
+            <th>Artist</th>
+            <td id="modal-artist"></td>
+          </tr>
+          <tr>
+            <th>Release Date</th>
+            <td id="modal-release-date"></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
+</div>
+
+
+
+
 
     <div class="content-container">
       <div id="card-container"></div>

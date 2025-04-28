@@ -13,9 +13,9 @@ def home():
 def random_cards():
     scry = ScryfallAPI()
     cards = []
-    for i in range(5):
+    for i in range(20):
         rc = scry.get_random_card()
-        time.sleep(0.1)
+        time.sleep(0.2)
         card = {
             'artist': rc['artist'],
             'finishes': rc['finishes'],

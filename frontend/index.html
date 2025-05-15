@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Card Stack Tinder Clone</title>
+  <title>Deckr Collectr</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
 </head>
 <body>
 
+  <!-- Header: (Title, Shopping Cart, Settings) -->
   <header class="header">
-    <div class="site-name">Deckr</div>
+    <div class="header-switch">
+      <button id="light-mode" onclick="toggle_mode();">🌞</button>
+    </div>
+    <div class="site-name">Deckr Collectr</div>
     <div class="header-buttons">
       <button>🛒 <span id="like-count" class="badge">0</span></button>
       <button onclick="console.log(likedCards);">⚙️</button>
@@ -19,25 +23,23 @@
 
   <!-- Loading spinner -->
   <div id="loading-spinner" class="loading-spinner">
-    <!-- You can use a simple CSS spinner or an image spinner here -->
     <div class="spinner"></div>
   </div>
 
-  <!-- Modal -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span id="close-btn" class="close-btn" onclick="closeModal()">&times;</span>
-    
-    <!-- Modal container for content: Image on the left, info on the right -->
+  <!-- Modal (Current Card Info) -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close-btn" class="close-btn" onclick="closeModal()">&times;</span>
+      
+    <!-- Modal container for card: Image on the left, info on the right -->
     <div class="modal-card-content">
-      <!-- Left side: Image -->
       <div class="modal-img-container">
         <img src="" id="modal-image" alt="Card Image" />
       </div>
       
-      <!-- Right side: Information in a scrollable container -->
       <div class="modal-info-container">
         <table>
+          <!-- Formated as th contains left side name, td contains rightside info in table-->
           <tr>
             <th>Name</th>
             <td id="modal-name"></td>
@@ -64,19 +66,148 @@
           </tr>
           <tr>
             <th>Legalities</th>
-            <td id="modal-legalities"></td>
+            <td id="modal-legalities">
+              <table>
+                <tr>
+                  <th>Alchemy</th>
+                  <td id="modal-alchemy-legal"></td>
+                </tr>
+                <tr>
+                  <th>Brawl</th>
+                  <td id="modal-brawl-legal"></td>
+                </tr>
+                <tr>
+                  <th>Commander</th>
+                  <td id="modal-commander-legal"></td>
+                </tr>
+                <tr>
+                  <th>Duel</th>
+                  <td id="modal-duel-legal"></td>
+                </tr>
+                <tr>
+                  <th>Explorer</th>
+                  <td id="modal-explorer-legal"></td>
+                </tr>
+                <tr>
+                  <th>Future</th>
+                  <td id="modal-future-legal"></td>
+                </tr>
+                <tr>
+                  <th>Gladiator</th>
+                  <td id="modal-gladiator-legal"></td>
+                </tr>
+                <tr>
+                  <th>Historic</th>
+                  <td id="modal-historic-legal"></td>
+                </tr>
+                <tr>
+                  <th>Legacy</th>
+                  <td id="modal-legacy-legal"></td>
+                </tr>
+                <tr>
+                  <th>Modern</th>
+                  <td id="modal-modern-legal"></td>
+                </tr>
+                <tr>
+                  <th>Oathbreaker</th>
+                  <td id="modal-oathbreaker-legal"></td>
+                </tr>
+                <tr>
+                  <th>Old School</th>
+                  <td id="modal-oldschool-legal"></td>
+                </tr>
+                <tr>
+                  <th>Pauper</th>
+                  <td id="modal-pauper-legal"></td>
+                </tr>
+                <tr>
+                  <th>Pauper Commander</th>
+                  <td id="modal-paupercommander-legal"></td>
+                </tr>
+                <tr>
+                  <th>Penny</th>
+                  <td id="modal-penny-legal"></td>
+                </tr>
+                <tr>
+                  <th>Pioneer</th>
+                  <td id="modal-pioneer-legal"></td>
+                </tr>
+                <tr>
+                  <th>PreDH</th>
+                  <td id="modal-predh-legal"></td>
+                </tr>
+                <tr>
+                  <th>Premodern</th>
+                  <td id="modal-premodern-legal"></td>
+                </tr>
+                <tr>
+                  <th>Standard</th>
+                  <td id="modal-standard-legal"></td>
+                </tr>
+                <tr>
+                  <th>Standard Brawl</th>
+                  <td id="modal-standardbrawl-legal"></td>
+                </tr>
+                <tr>
+                  <th>Timeless</th>
+                  <td id="modal-timeless-legal"></td>
+                </tr>
+                <tr>
+                  <th>Vintage</th>
+                  <td id="modal-vintage-legal"></td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
             <th>Pricing</th>
-            <td id="modal-prices"></td>
+            <td id="modal-prices">
+              <table>
+                <tr>
+                  <th>EUR</th>
+                  <td id="modal-eur-price"></td>
+                </tr>
+                <tr>
+                  <th>EUR Foil</th>
+                  <td id="modal-eur-foil-price"></td>
+                </tr>
+                <tr>
+                  <th>TIX</th>
+                  <td id="modal-tix-price"></td>
+                </tr>
+                <tr>
+                  <th>USD</th>
+                  <td id="modal-usd-price"></td>
+                </tr>
+                <tr>
+                  <th>USD Etched</th>
+                  <td id="modal-usd-etched-price"></td>
+                </tr>
+                <tr>
+                  <th>USD Foil</th>
+                  <td id="modal-usd-foil-price"></td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
             <th>Purchase</th>
-            <td id="modal-purchases"></td>
-          </tr>
-          <tr>
-            <th>Finishes</th>
-            <td id="modal-finishes"></td>
+            <td id="modal-purchases">
+              <table>
+                <tr>
+                  <th>CardHoarder</th>
+                  <td id="modal-cardhoarder-url">🔗</td>
+                </tr>
+                <tr>
+                  <th>CardMarket</th>
+                  <td id="modal-cardmarket-url">🔗</td>
+                </tr>
+                <tr>
+                  <th>TCGPlayer</th>
+                  <td id="modal-tcgplayer-url">🔗</td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
             <th>Artist</th>
@@ -92,21 +223,24 @@
   </div>
 </div>
 
-
-
-
-
-    <div class="content-container">
-      <div id="card-container"></div>
-  
-      <div class="button-section">
-        <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
-        <button class="action-btn" onclick="showModal()">🔍</button>
-        <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
+    <div id="card-platform">
+      <div class="content-container">
+        <div id="card-container"></div>
+    
+        <div class="button-section">
+          <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
+          <button class="action-btn" onclick="showModal()">🔍</button>
+          <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
+        </div>
       </div>
     </div>
 
+  <footer class="footer">
+    <p>Powered by <a href="https://scryfall.com" target="_blank" rel="noopener noreferrer">Scryfall.io</a></p>
+  </footer>
+
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>

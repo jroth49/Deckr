@@ -3,7 +3,6 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f7f7f7;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -11,6 +10,7 @@ body {
   overflow: hidden;
 }
 
+/* Container for the Inital Card Placement */
 #card-container {
   position: relative;
   width: 400px; /* Same as card container */
@@ -19,7 +19,6 @@ body {
   margin: 0 auto; /* Center the card container */
 }
 
-/* Wrapper container for both cards and buttons */
 .content-container {
   width: 400px; /* Same width for both card container and buttons */
   display: flex;
@@ -27,6 +26,7 @@ body {
   align-items: center; /* Align both vertically stacked content */
 }
 
+/* Buttons beneath card container */
 .button-section {
   width: 400px; /* Match the card container width */
   display: flex;
@@ -36,7 +36,7 @@ body {
   margin-top: 20px;
 }
 
-/* Style for action buttons */
+/* Styling for buttons beneath card container */
 .action-btn {
   width: 60px; /* Button width */
   height: 60px; /* Button height */
@@ -50,15 +50,16 @@ body {
   font-size: 30px; /* Icon size */
   cursor: pointer; /* Pointer cursor on hover */
   transition: all 0.3s ease; /* Smooth transition for hover effects */
+  user-select: none;
 }
 
-/* Hover effect: box-shadow for raise, inset transform for indentation */
+/* Hover effect for buttons beneath card container */
 .action-btn:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Raised effect */
   transform: translateY(-5px); /* Raise the button */
 }
 
-/* Active effect: inset for depression */
+/* On click depression for buttons beneath card container */
 .action-btn:active {
   transform: translateY(2px); /* Button moves down slightly for depression */
   box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2); /* Inset shadow effect */
@@ -69,8 +70,7 @@ body {
   width: 400px;
   height: 530px;
   background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 25px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -78,6 +78,7 @@ body {
   transition: transform 0.3s ease, opacity 0.3s ease;
   will-change: transform;
   cursor: grab;
+  user-select: none;
   transform-origin: center center;
 }
 
@@ -101,19 +102,109 @@ button {
   transition: background 0.5s ease;
 }
 
-/* Stack styling */
 .card:nth-child(1) {
-  z-index: 3;
+  z-index: 20;
+  transform: scale(1) translateY(0);
 }
 
 .card:nth-child(2) {
-  transform: scale(0.95) translateY((10px));
-  z-index: 2;
+  z-index: 19;
+  transform: scale(0.95) translateY(10px);
 }
 
 .card:nth-child(3) {
-  transform: scale(0.9) translateY((20px));
+  z-index: 18;
+  transform: scale(0.9) translateY(20px);
+}
+
+.card:nth-child(4) {
+  z-index: 17;
+  transform: scale(0.85) translateY(30px);
+}
+
+.card:nth-child(5) {
+  z-index: 16;
+  transform: scale(0.8) translateY(40px);
+}
+
+.card:nth-child(6) {
+  z-index: 15;
+  transform: scale(0.75) translateY(50px);
+}
+
+.card:nth-child(7) {
+  z-index: 14;
+  transform: scale(0.7) translateY(60px);
+}
+
+.card:nth-child(8) {
+  z-index: 13;
+  transform: scale(0.65) translateY(70px);
+}
+
+.card:nth-child(9) {
+  z-index: 12;
+  transform: scale(0.6) translateY(80px);
+}
+
+.card:nth-child(10) {
+  z-index: 11;
+  transform: scale(0.55) translateY(90px);
+}
+
+.card:nth-child(11) {
+  z-index: 10;
+  transform: scale(0.5) translateY(100px);
+}
+
+.card:nth-child(12) {
+  z-index: 9;
+  transform: scale(0.45) translateY(110px);
+}
+
+.card:nth-child(13) {
+  z-index: 8;
+  transform: scale(0.4) translateY(120px);
+}
+
+.card:nth-child(14) {
+  z-index: 7;
+  transform: scale(0.35) translateY(130px);
+}
+
+.card:nth-child(15) {
+  z-index: 6;
+  transform: scale(0.3) translateY(140px);
+}
+
+.card:nth-child(16) {
+  z-index: 5;
+  transform: scale(0.25) translateY(150px);
+}
+
+.card:nth-child(17) {
+  z-index: 4;
+  transform: scale(0.2) translateY(160px);
+}
+
+.card:nth-child(18) {
+  z-index: 3;
+  transform: scale(0.15) translateY(170px);
+}
+
+.card:nth-child(19) {
+  z-index: 2;
+  transform: scale(0.1) translateY(180px);
+}
+
+.card:nth-child(20) {
   z-index: 1;
+  transform: scale(0.05) translateY(190px);
+}
+
+.card:nth-child(20) {
+  z-index: 1;
+  transform: scale(0.05) translateY(190px);
 }
 
 .header {
@@ -133,7 +224,40 @@ button {
 .site-name {
   font-size: 1.5rem;
   font-weight: bold;
-  font-family: "Algerian", fantasy;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.header-switch {
+  position: absolute;
+  left: 20px;
+}
+
+/* Styling for buttons beneath card container */
+.header-switch button {
+  width: 45px; /* Button width */
+  height: 45px; /* Button height */
+  border: 1px solid lightgrey; /* Border with color */
+  background-color: transparent; /* No background */
+  color: #3498db; /* Border and text color */
+  border-radius: 50%; /* Makes the button circular */
+  display: flex; /* Aligns the icon inside the button */
+  justify-content: center; /* Centers the icon horizontally */
+  align-items: center; /* Centers the icon vertically */
+  font-size: 30px; /* Icon size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for buttons beneath card container */
+.header-switch button:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Raised effect */
+  transform: translateY(-5px); /* Raise the button */
+}
+
+/* On click depression for buttons beneath card container */
+.header-switch button:active {
+  transform: translateY(2px); /* Button moves down slightly for depression */
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2); /* Inset shadow effect */
 }
 
 .header-buttons {
@@ -146,7 +270,20 @@ button {
   padding: 8px 12px;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.header-buttons button:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Raised effect */
+  transform: translateY(-5px); /* Raise the button */
+}
+
+.header-buttons button:active {
+  transform: translateY(2px); /* Button moves down slightly for depression */
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2); /* Inset shadow effect */
+}
+
+
 
 /* Modal background (covers the entire screen) */
 .modal {
@@ -202,7 +339,12 @@ button {
 .modal-img-container img {
   width: 100%; /* Image takes up 100% of its container width */
   height: auto;
-  border-radius: 8px; /* Optional: rounded corners */
+  border-radius: 8px; /* Optional: rounded corner;*/
+  transition: transform 0.3s ease;
+}
+
+.modal-img-container img:hover {
+  transform: scale(1.2)
 }
 
 /* Right side: Information container */
@@ -218,6 +360,13 @@ button {
   width: 100%;
   border-collapse: collapse; /* Merge borders */
   text-align: left; /* Align text to the left */
+}
+
+#card-platform {
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 7px 7px 3px rgba(0, 0, 0, 0.2); /* Create the shadow for the raised effect */
+  transition: box-shadow 0.3s ease; /* Smooth transition for the shadow */
 }
 
 .modal-info-container th, .modal-info-container td {
@@ -240,7 +389,23 @@ button {
   word-wrap: break-word; /* Allow text to break if it overflows */
 }
 
-/* Scroll styling (optional) */
+#modal-legalities th {
+  text-align: right;
+}
+
+#modal-legalities td {
+  padding-right: 120px;
+}
+
+
+#modal-purchases a {
+  text-decoration: none;
+}
+
+
+
+
+/* Scrollbar styling */
 .modal-info-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -253,8 +418,6 @@ button {
 .modal-info-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-
 
 
 
@@ -280,4 +443,27 @@ button {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+
+/* Styling for the footer */
+.footer {
+  color: lightgray; /* White text */
+  text-align: center; /* Center the text */
+  padding: 5px; /* Padding around the text */
+  position: fixed; /* Fixed at the bottom of the page */
+  bottom: 0;
+  width: 100%; /* Full width */
+  font-size: 10px; /* Set a reasonable font size */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.footer a {
+  color: #00bcd4; /* Set the link color */
+  text-decoration: none; /* Remove underline from link */
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Add underline when the link is hovered */
 }

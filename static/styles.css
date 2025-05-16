@@ -8,6 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  transition: 0.3s;
 }
 
 /* Container for the Inital Card Placement */
@@ -219,6 +220,7 @@ button {
   justify-content: center;
   align-items: center;
   z-index: 1000;            /* <-- Keeps it above other elements */
+  transition: 0.3s;
 }
 
 .site-name {
@@ -466,4 +468,173 @@ button {
 
 .footer a:hover {
   text-decoration: underline; /* Add underline when the link is hovered */
+}
+
+
+
+
+
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0; /* Changed from 'left' to 'right' */
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.3s;
+  border-left: 1px solid #ccc; /* Adjust width and color as needed */
+}
+
+/* Overlay styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  visibility: hidden; /* Hidden by default */
+  z-index: 998; /* Just below the side menu */
+  backdrop-filter: blur(5px); /* Apply blur effect to the content */
+  transition: visibility 0.3s, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.overlay.visible {
+  visibility: visible;
+  opacity: 0.75;
+}
+
+.cardList {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  overflow-y: auto;  /* Make the card list scrollable */
+  flex-grow: 1;      /* Allow the card list to grow and fill available space */
+  height: calc(100vh - 80px); /* Deduct the space for the buttons and top padding */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Scroll styling for card list */
+#cardList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#cardList::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* Card list styles */
+.card-item {
+  position: relative;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 0.5px;
+  background-color: #fff;
+  transition: 0.3s;
+  border-width: 1px;
+  overflow: visible;
+  border-radius: 15px;
+}
+
+.card-item p {
+  font-size: 15px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.card-list p {
+  font-size: 15px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.card-item:hover {
+  cursor: pointer;
+}
+
+.imagePreview {
+  display: none; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  z-index: 2000;
+}
+
+
+
+.cardItem:hover .imagePreview {
+  display: flex; /* Show the image preview when the card is hovered */
+}
+
+.card-preview {
+  border-radius: 15px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; /* Optional: ensures the image is contained inside the preview area */
+}
+
+#sideMenu-buttons {
+  display: flex;               /* Enable flexbox layout */
+  justify-content: center;  /* Align buttons to the left */
+  align-items: center;         /* Align buttons vertically to the center */
+  padding: 10px 20px;          /* Add padding for spacing around buttons */
+  gap: 10px;                   /* Adjust this value to decrease/increase space between buttons */
+  position: sticky;            /* Make the section sticky */
+  top: 0;                      /* Stick to the top */
+  z-index: 10;                 /* Ensure the buttons are above other content */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  height: 60px;
+  transition: 0.3s;
+}
+
+/* Individual Button Style */
+#sideMenu-buttons button {
+  width: 45px; /* Button width */
+  height: 45px; /* Button height */
+  border: 1px solid lightgrey; /* Border with color */
+  background-color: transparent; /* No background */
+  color: #3498db; /* Border and text color */
+  border-radius: 50%; /* Makes the button circular */
+  display: flex; /* Aligns the icon inside the button */
+  justify-content: center; /* Centers the icon horizontally */
+  align-items: center; /* Centers the icon vertically */
+  font-size: 30px; /* Icon size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  padding: 8px 15px;           /* Add padding to buttons */
+  transition: 0.3s;
+}
+
+#sideMenu-buttons button:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Raised effect */
+  transform: translateY(-5px); /* Raise the button */
+}
+
+#sideMenu-buttons button:active {
+  transform: translateY(2px); /* Button moves down slightly for depression */
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2); /* Inset shadow effect */
+}
+
+
+.placeholder {
+  display: none;
+  padding: 25px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: lightgray;
+  font-style: italic;
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Deckr Collectr</title>
+  <title>Deckr</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
 </head>
@@ -14,12 +14,31 @@
     <div class="header-switch">
       <button id="light-mode" onclick="toggle_mode();">🌞</button>
     </div>
-    <div class="site-name">Deckr Collectr</div>
+    <div class="site-name">Deckr</div>
     <div class="header-buttons">
-      <button>🛒 <span id="like-count" class="badge">0</span></button>
+      <button onclick="show_cart()">🛒 <span id="like-count" class="badge">0</span></button>
       <button onclick="console.log(likedCards);">⚙️</button>
     </div>
   </header>
+
+  <div id="overlay" class="overlay"></div> <!-- Covers Screen When Modal is Open -->
+
+  <!-- Side Menu For -->
+  <div id="sideMenu" class="side-menu">
+    
+    <div id="sideMenu-buttons">
+      <button onclick="close_cart()">&times;</button>
+      <button id="clear-btn" onclick="clear_list()">🗑️</button>
+      <button id="export-btn">📝</button>
+    </div>
+    <div id="cardList">
+      <div id="placeholderMessage" class="placeholder">
+        Your shopping cart is empty. Start swiping to add cards!
+      </div>
+    </div>
+
+    
+  </div>
 
   <!-- Loading spinner -->
   <div id="loading-spinner" class="loading-spinner">
@@ -221,24 +240,24 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
 
-    <div id="card-platform">
-      <div class="content-container">
-        <div id="card-container"></div>
-    
-        <div class="button-section">
-          <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
-          <button class="action-btn" onclick="showModal()">🔍</button>
-          <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
-        </div>
+  <!-- What Viewable Cards Sit On -->
+  <div id="card-platform">
+    <div class="content-container">
+      <div id="card-container"></div>
+  
+      <div class="button-section">
+        <button class="action-btn" id="dislike-btn" onclick="swipeCard('left');">👎</button>
+        <button class="action-btn" onclick="showModal()">🔍</button>
+        <button class="action-btn" id="like-btn" onclick="swipeCard('right');">👍</button>
       </div>
     </div>
+  </div>
 
   <footer class="footer">
     <p>Powered by <a href="https://scryfall.com" target="_blank" rel="noopener noreferrer">Scryfall.io</a></p>
   </footer>
-
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 

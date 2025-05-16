@@ -5,10 +5,35 @@ let cardIndex = 0;
 let cardLikes = 0;
 
 const storedList = sessionStorage.getItem('likedCards');
+const cardListContainer = document.getElementById('cardList');
+
 if (storedList) {
+
   likedCards = JSON.parse(storedList);
   cardLikes = likedCards.length;
   document.getElementById('like-count').innerHTML = cardLikes;
+
+  if (likedCards.length == 0) {
+    console.log("ZERO CARDS");
+    document.getElementById('placeholderMessage').style.display = 'block';
+  }
+
+  likedCards.forEach(card=> {
+    
+    const cardItem = document.createElement('div');
+    cardItem.classList.add('card-item');
+    cardItem.innerHTML = '' //'<p>' + card['name'] + ' ' + card['mana_cost'] + '</p>';
+
+    const imgPreview = document.createElement('img');
+    imgPreview.classList.add('card-preview'); // Optionally, add classes for styling
+    imgPreview.src = card['img']; // Set the image source dynamically
+    imgPreview.alt = card['name']; // Set the alt text for the image
+    imgPreview.style.borderRadius = '15px';
+    cardItem.appendChild(imgPreview);
+    cardListContainer.appendChild(cardItem);
+  });
+} else {
+  document.getElementById('placeholderMessage').style.display = 'block';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -205,6 +230,7 @@ function showModal(profile) {
 
 }
 
+//light dark mode
 function toggle_mode() {
     let body = document.getElementsByTagName('body')[0];
     let header = document.getElementsByTagName('header')[0];
@@ -212,7 +238,8 @@ function toggle_mode() {
     let modal = document.getElementsByClassName('modal-content')[0];
     let tables = document.querySelectorAll('table');
     let theads = document.querySelectorAll('th');
-    let tdeads = document.querySelectorAll('td');    
+    let tdeads = document.querySelectorAll('td');
+    let divs = document.getElementsByClassName('card-preview');    
 
     if (current_mode === '🌞') {
       current_mode = '🌙';
@@ -220,6 +247,9 @@ function toggle_mode() {
       body.style = 'background-color: #1F1F1F;';
       header.style = 'background-color: #1F1F1F; color: lightgrey; border-color: lightgrey;';
       modal.style = 'background-color: #1F1F1F; color: lightgrey; border-color: lightgrey;';
+      document.getElementById('sideMenu').style.backgroundColor = '#1F1F1F'; //sideMenu-buttons
+      document.getElementById('sideMenu-buttons').style.backgroundColor = '#1F1F1F';
+
       tables.forEach(table => {
         table.style.backgroundColor = '#1F1F1F';
         table.style.color = 'lightgrey'; 
@@ -232,12 +262,18 @@ function toggle_mode() {
         td.style.backgroundColor = '#1F1F1F';
         td.style.color = 'lightgrey'; 
       });
+      divs.forEach(i => {
+        i.style.backgroundColor = '#1F1F1F';
+      });
+
     } else {
       current_mode = '🌞';
       document.getElementById('light-mode').innerHTML = current_mode;
       body.style = 'background-color: white;';
       header.style = 'background-color: white; color: black; border-color: #ddd;';
       modal.style = 'background-color: white; color: black; border-color: #ddd;';
+      document.getElementById('sideMenu').style.backgroundColor = 'white';
+      document.getElementById('sideMenu-buttons').style.backgroundColor = 'white';
       tables.forEach(table => {
         table.style.backgroundColor = 'white';
         table.style.color = 'black'; 
@@ -250,7 +286,40 @@ function toggle_mode() {
         td.style.backgroundColor = 'white';
         td.style.color = 'black'; 
       });
+      divs.forEach(i => {
+        i.style.backgroundColor = 'white';
+      });
     }
+}
+
+function show_cart() {
+    const menuButton = document.getElementById('menuButton');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('visible');
+    sideMenu.style.width = '350px';
+}
+
+function close_cart() {
+    const menuButton = document.getElementById('menuButton');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
+    sideMenu.style.width = '0';
+    overlay.classList.remove('visible');
+}
+
+function clear_list() {
+  likedCards = [];
+  cardLikes = 0;
+  document.getElementById('like-count').innerHTML = cardLikes;
+  sessionStorage.removeItem('likedCards');
+  
+  const place = document.getElementById('placeholderMessage');
+  cardListContainer.innerHTML = '';
+  cardListContainer.appendChild(place);
+  place.style.display = 'block';
 }
 
 // Function to close the modal
@@ -287,6 +356,18 @@ function swipeCard(direction) {
     likedCards.push(cardData[c_index]);
     sessionStorage.setItem('likedCards', JSON.stringify(likedCards));
     document.getElementById('like-count').innerHTML = cardLikes;
+    document.getElementById('placeholderMessage').style.display = 'none';
+    const cardItem = document.createElement('div');
+    cardItem.classList.add('card-item');
+    cardItem.innerHTML = ''// '<p>' + cardData[c_index]['name'] + ' ' + cardData[c_index]['mana_cost'] + '</p>';
+    const imgPreview = document.createElement('img');
+    imgPreview.classList.add('card-preview'); // Optionally, add classes for styling
+    imgPreview.src = cardData[c_index]['img']; // Set the image source dynamically
+    imgPreview.alt = cardData[c_index]['name']; // Set the alt text for the image
+    imgPreview.style.borderRadius = '15px';
+
+    cardItem.appendChild(imgPreview);
+    cardListContainer.appendChild(cardItem);
   }
 
   // Remove the liked/disliked card from cardData

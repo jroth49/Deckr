@@ -24,6 +24,8 @@ def convert_text(text):
     
     for s in symbols:
         match s:
+            case r'{0}':
+                text = text.replace(r'{0}', '<img src="https://svgs.scryfall.io/card-symbols/0.svg" alt="1 Mana" style="width: 15px; height: auto;">')
             case r'{1}':
                 text = text.replace(r'{1}', '<img src="https://svgs.scryfall.io/card-symbols/1.svg" alt="1 Mana" style="width: 15px; height: auto;">')
             case r'{2}':
@@ -84,6 +86,14 @@ def convert_text(text):
                 text = text.replace(r'{2R}', '<img src="https://svgs.scryfall.io/card-symbols/2R.svg" alt="2 or Red Mana" style="width: 15px; height: auto;">')
             case r'{T}':
                 text = text.replace(r'{T}', '<img src="https://svgs.scryfall.io/card-symbols/T.svg" alt="Tap Symbol" style="width: 15px; height: auto;">')
+            case r'{U/P}':
+                text = text.replace(r'{U/P}', '<img src="https://svgs.scryfall.io/card-symbols/UP.svg" alt="Tap Symbol" style="width: 15px; height: auto;">')
+            case r'{U/R}':
+                text = text.replace(r'{U/R}', '<img src="https://svgs.scryfall.io/card-symbols/UR.svg" alt="Tap Symbol" style="width: 15px; height: auto;">')
+            case r'{10}':
+                text = text.replace(r'{10}', '<img src="https://svgs.scryfall.io/card-symbols/10.svg" alt="Tap Symbol" style="width: 15px; height: auto;">')
+            case r'{X}':
+                text = text.replace(r'{X}', '<img src="https://svgs.scryfall.io/card-symbols/X.svg" alt="Tap Symbol" style="width: 15px; height: auto;">')
             case _:
                 continue
 
@@ -93,6 +103,7 @@ def convert_text(text):
 
 @app.route('/')
 def home():
+
     user_ip = request.remote_addr
     print(f'Your IP Address: {user_ip}')
     return render_template('index.html')

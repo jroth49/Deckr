@@ -1,10 +1,12 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, Response
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from datetime import datetime
 from backend.scryfall_api import ScryfallAPI
 import time
 import re 
+import csv
+import io
 
 app = Flask(__name__, template_folder='frontend')
 limiter = Limiter(get_remote_address, app=app)
@@ -99,8 +101,7 @@ def convert_text(text):
 
     return text
 
-
-
+#routes
 @app.route('/')
 def home():
 
@@ -141,7 +142,145 @@ def random_cards():
 
     return cards
 
+@app.route('/download', methods=['POST'])
+@limiter.limit('1 per 10 seconds')
+def download():
+    cards = request.get_json()['data']
+    print(cards[0].keys())
+    print(cards[0]['legalities'].keys())
+    print(cards[0]['prices'].keys())
+    print(cards[0]['purchase'].keys())
 
+
+    # Select fields to include in CSV
+    fieldnames = [
+        'name', 
+        'finishes', 
+        'set', 
+        'rarity', 
+        'release', 
+        'artist', 
+        'img', 
+        'alchemy', 
+        'brawl', 
+        'commander', 
+        'duel', 
+        'explorer', 
+        'future', 
+        'gladiator', 
+        'historic', 
+        'legacy', 
+        'modern', 
+        'oathbreaker', 
+        'oldschool', 
+        'pauper', 
+        'paupercommander', 
+        'penny', 
+        'pioneer', 
+        'predh', 
+        'premodern', 
+        'standard', 
+        'standardbrawl', 
+        'timeless', 
+        'vintage',
+        'eur_price',
+        'eur_price_foil',
+        'tix_price',
+        'usd_price',
+        'usd_price_etched',
+        'usd_price_foil',
+        'cardhoarder_link',
+        'cardmarket_link',
+        'tcgplayer_link'
+    ]
+
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    writer.writeheader()
+
+    for card in cards:
+
+        finishes = card.get('finishes', '')[0] if len(card.get('finishes', '')) == 1 else ','.join(card.get('finishes'))
+        alchemy = card['legalities']['alchemy']
+        brawl = card['legalities']['brawl']
+        commander = card['legalities']['commander']
+        duel = card['legalities']['duel']
+        explorer = card['legalities']['explorer']
+        future = card['legalities']['future']
+        gladiator = card['legalities']['gladiator']
+        historic = card['legalities']['historic']
+        legacy = card['legalities']['legacy']
+        modern = card['legalities']['modern']
+        oathbreaker = card['legalities']['oathbreaker']
+        oldschool = card['legalities']['oldschool']
+        pauper = card['legalities']['pauper']
+        paupercommander = card['legalities']['paupercommander']
+        penny = card['legalities']['penny']
+        pioneer = card['legalities']['pioneer']
+        predh = card['legalities']['predh']
+        premodern = card['legalities']['premodern']
+        standard = card['legalities']['standard']
+        standardbrawl = card['legalities']['standardbrawl']
+        timeless = card['legalities']['timeless']
+        vintage = card['legalities']['vintage']
+
+        eur_price = card['prices']['eur']
+        eur_price_foil = card['prices']['eur_foil']
+        tix_price = card['prices']['tix']
+        usd_price = card['prices']['usd']
+        usd_price_etched = card['prices']['usd_etched']
+        usd_price_foil = card['prices']['usd_foil']
+
+        cardhoarder_link = card['purchase']['cardhoarder']
+        cardmarket_link = card['purchase']['cardmarket']
+        tcgplayer_link = card['purchase']['tcgplayer']
+
+
+        writer.writerow({
+            'name': card.get('name', ''),
+            'finishes': finishes,
+            'set': card.get('set', ''),
+            'rarity': card.get('rarity', ''),
+            'release': card.get('release', ''),
+            'artist': card.get('artist', ''),
+            'img': card.get('img', ''),
+            'alchemy': alchemy,
+            'brawl': brawl,
+            'commander': commander,
+            'duel': duel,
+            'explorer': explorer,
+            'future': future,
+            'gladiator': gladiator,
+            'historic': historic,
+            'legacy': legacy,
+            'modern': modern,
+            'oathbreaker': oathbreaker,
+            'oldschool': oldschool,
+            'pauper': pauper,
+            'paupercommander': paupercommander,
+            'penny': penny,
+            'pioneer': pioneer,
+            'predh': predh,
+            'premodern': premodern,
+            'standard': standard,
+            'standardbrawl': standardbrawl,
+            'timeless': timeless,
+            'vintage': vintage,
+            'eur_price': eur_price,
+            'eur_price_foil': eur_price_foil,
+            'tix_price': tix_price,
+            'usd_price': usd_price,
+            'usd_price_etched': usd_price_etched,
+            'usd_price_foil': usd_price_foil,
+            'cardhoarder_link': cardhoarder_link,
+            'cardmarket_link': cardmarket_link,
+            'tcgplayer_link': tcgplayer_link
+        })
+
+    csv_data = output.getvalue()
+    response = Response(csv_data, mimetype='text/csv')
+    response.headers['Content-Disposition'] = 'attachment; filename=cards.csv'
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

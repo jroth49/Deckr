@@ -29,6 +29,41 @@ if (storedList) {
     imgPreview.src = card['img']; // Set the image source dynamically
     imgPreview.alt = card['name']; // Set the alt text for the image
     imgPreview.style.borderRadius = '15px';
+
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('card-buttons');
+
+    const removeBtn = document.createElement('button');
+    removeBtn.innerText = '❌';
+    removeBtn.classList.add('card-btn', 'remove-btn');
+    removeBtn.onclick = () => {
+      cardItem.remove(); // You can also update likedCards if needed
+      let name = cardItem.getElementsByTagName('img')[0].alt;
+      const index = likedCards.findIndex(c => c.name === name);
+      cardLikes--;
+      document.getElementById('like-count').innerHTML = cardLikes; //update Like Count
+
+      likedCards.splice(index, 1);
+      if (likedCards.length != 0) {
+        sessionStorage.setItem('likedCards', JSON.stringify(likedCards));
+      } else {
+        sessionStorage.removeItem('likedCards');
+      }
+    };
+
+    const openBtn = document.createElement('button');
+    openBtn.innerText = '🔗';
+    openBtn.classList.add('card-btn', 'open-btn');
+    openBtn.onclick = () => {
+      window.open(card['purchase']['tcgplayer'], '_blank'); // Ensure you have a `link` property
+    };
+
+    buttonContainer.appendChild(removeBtn);
+    buttonContainer.appendChild(openBtn);
+
+
+    cardItem.appendChild(buttonContainer);
     cardItem.appendChild(imgPreview);
     cardListContainer.appendChild(cardItem);
   });
@@ -239,7 +274,7 @@ function toggle_mode() {
     let tables = document.querySelectorAll('table');
     let theads = document.querySelectorAll('th');
     let tdeads = document.querySelectorAll('td');
-    let divs = document.getElementsByClassName('card-preview');    
+    let divs = document.getElementsByClassName('card-item');    
 
     if (current_mode === '🌞') {
       current_mode = '🌙';
@@ -262,9 +297,9 @@ function toggle_mode() {
         td.style.backgroundColor = '#1F1F1F';
         td.style.color = 'lightgrey'; 
       });
-      divs.forEach(i => {
-        i.style.backgroundColor = '#1F1F1F';
-      });
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].style.backgroundColor = '#1F1F1F';
+      }
 
     } else {
       current_mode = '🌞';
@@ -286,9 +321,9 @@ function toggle_mode() {
         td.style.backgroundColor = 'white';
         td.style.color = 'black'; 
       });
-      divs.forEach(i => {
-        i.style.backgroundColor = 'white';
-      });
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].style.backgroundColor = 'white';
+      }
     }
 }
 
@@ -352,19 +387,58 @@ function swipeCard(direction) {
 
   // If the card is liked, add it to likedCards and increment cardLikes
   if (direction === 'right') {
-    cardLikes++;
-    likedCards.push(cardData[c_index]);
-    sessionStorage.setItem('likedCards', JSON.stringify(likedCards));
-    document.getElementById('like-count').innerHTML = cardLikes;
-    document.getElementById('placeholderMessage').style.display = 'none';
+
+    cardLikes++; //add like
+    likedCards.push(cardData[c_index]); //add card to likedCards list
+    sessionStorage.setItem('likedCards', JSON.stringify(likedCards)); //update sessionStorage
+    document.getElementById('like-count').innerHTML = cardLikes; //update Like Count
+    document.getElementById('placeholderMessage').style.display = 'none'; //hide placeholder message
+
     const cardItem = document.createElement('div');
     cardItem.classList.add('card-item');
-    cardItem.innerHTML = ''// '<p>' + cardData[c_index]['name'] + ' ' + cardData[c_index]['mana_cost'] + '</p>';
+    cardItem.innerHTML = '';
+
+
     const imgPreview = document.createElement('img');
     imgPreview.classList.add('card-preview'); // Optionally, add classes for styling
     imgPreview.src = cardData[c_index]['img']; // Set the image source dynamically
     imgPreview.alt = cardData[c_index]['name']; // Set the alt text for the image
     imgPreview.style.borderRadius = '15px';
+
+
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('card-buttons');
+
+    const removeBtn = document.createElement('button');
+    removeBtn.innerText = '❌';
+    removeBtn.classList.add('card-btn', 'remove-btn');
+    removeBtn.onclick = () => {
+      cardItem.remove(); // You can also update likedCards if needed
+      let name = cardItem.getElementsByTagName('img')[0].alt;
+      const index = likedCards.findIndex(c => c.name === name);
+      likedCards.splice(index, 1);
+
+      cardLikes--;
+      document.getElementById('like-count').innerHTML = cardLikes; //update Like Count
+      if (likedCards.length != 0) {
+        sessionStorage.setItem('likedCards', JSON.stringify(likedCards));
+      } else {
+        sessionStorage.removeItem('likedCards');
+      }
+    };
+
+    const openBtn = document.createElement('button');
+    openBtn.innerText = '🔗';
+    openBtn.classList.add('card-btn', 'open-btn');
+    openBtn.onclick = () => {
+      window.open(cardData[c_index]['purchase']['tcgplayer'], '_blank'); // Ensure you have a `link` property
+    };
+
+    buttonContainer.appendChild(removeBtn);
+    buttonContainer.appendChild(openBtn);
+    cardItem.append(buttonContainer);
+
 
     cardItem.appendChild(imgPreview);
     cardListContainer.appendChild(cardItem);
@@ -446,4 +520,38 @@ function getCurrentCard() {
   }
 
   return c_index;
+}
+
+function download() {
+  if (likedCards.length == 0) {
+    return;
+  }
+
+  fetch('/download', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ data: likedCards }) // sending the list in a wrapper object
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to download CSV');
+    }
+    return response.blob(); // Get the response as a Blob
+  })
+  .then(blob => {
+    const url = URL.createObjectURL(blob); // Create a temporary URL for the Blob
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cards.csv'; // File name for download
+    document.body.appendChild(a);
+    a.click(); // Trigger download
+    a.remove(); // Cleanup
+    URL.revokeObjectURL(url); // Release memory
+  })
+  .catch(error => {
+    console.error('Download error:', error);
+    alert('Failed to download CSV.');
+  });
 }
